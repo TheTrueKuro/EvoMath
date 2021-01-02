@@ -1,4 +1,4 @@
-public class ComplexNumber {
+class ComplexNumber {
 
 	private double real, imaginary;
 
@@ -13,21 +13,28 @@ public class ComplexNumber {
 		this.imaginary = imaginary;
 	}
 
-	public static ComplexNumber add(ComplexNumber c1, ComplexNumber c2) {
+	public static ComplexNumber add(final ComplexNumber ... c) {
 
-		ComplexNumber c3 = new ComplexNumber(c1.getReal() + c2.getReal(), c1.getImaginary() + c2.getImaginary());
-		return c3;
+		double real = 0;
+		double imaginary = 0;
+
+		for (int i = 0; i < c.length; i++) {
+			real += c[i].getReal();
+			imaginary += c[i].getImaginary();
+		}
+
+		return new ComplexNumber(real, imaginary);
 	}
 
-	public static ComplexNumber add(ComplexNumber c1, double d1) {
+	public static ComplexNumber add(final ComplexNumber c, double ... d) {
 
-		ComplexNumber c2 = new ComplexNumber(c1.getReal() + d1, c1.getImaginary());
-		return c2;
-	}
+		double real = c.getReal();
+		double imaginary = c.getImaginary();
 
-	public static ComplexNumber add(double d1, ComplexNumber c1) {
-		ComplexNumber c2 = new ComplexNumber(d1 + c1.getReal(), c1.getImaginary());
-		return c2;
+		for (int i = 0; i < d.length; i++)
+			real += d[i];
+
+		return new ComplexNumber(real, imaginary);
 	}
 
 	double getReal() {
@@ -45,7 +52,7 @@ public class ComplexNumber {
 		if (imaginary >= 0) sign = '+';
 		else sign = 0;
 
-		System.out.print(real);
+		System.out.print(real); // Writing print(real + sign) actually adds the code value of $sign to the $real variable
 	        System.out.print(sign);
 		System.out.println(imaginary + "i");
 	}

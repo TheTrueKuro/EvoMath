@@ -2,11 +2,17 @@ class Test {
 
 	public static void main(String args[]) {
 
-		int a = 1;
-		int b = 2;
+		var c1 = new ComplexNumber(1, 2);
+		var c2 = new ComplexNumber(3, -9);
+		var c3 = new ComplexNumber(0, 69);
 
-		var c = new ComplexNumber(a, b);
-		c.show();
+		ComplexNumber.add(c1, c2, c3).show();
 
+		Matrix m = Matrix.getZeroMatrix(3);
+		m.show();
+		m = Matrix.getZeroMatrix(2, 5);
+		m.show();
+		m = Matrix.getIdentityMatrix(4);
+		m.show();
 	}
 }
