@@ -13,6 +13,12 @@ class ComplexNumber {
 		this.imaginary = imaginary;
 	}
 
+	ComplexNumber(final ComplexNumber c) {
+
+		this.real = c.getReal();
+		this.imaginary = c.getImaginary();
+	}
+
 	public static ComplexNumber add(final ComplexNumber ... c) {
 
 		double real = 0;
@@ -55,6 +61,5 @@ class ComplexNumber {
 		System.out.print(real); // Writing print(real + sign) actually adds the code value of $sign to the $real variable
 	        System.out.print(sign);
 		System.out.println(imaginary + "i");
-	}
-	
+	}	
 }
