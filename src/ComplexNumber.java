@@ -1,3 +1,5 @@
+import java.lang.Math;
+
 class ComplexNumber {
 
 	private double real, imaginary;
@@ -42,6 +44,35 @@ class ComplexNumber {
 
 		return new ComplexNumber(real, imaginary);
 	}
+
+	public static ComplexNumber multiply(final ComplexNumber ... c) {
+
+		if (c.length < 2) return null;
+
+		ComplexNumber c_fin = new ComplexNumber(c[0]);
+
+		for (int i = 1; i < c.length; i++) {
+			
+			double real, imaginary;
+
+			real = c_fin.getReal() * c[i].getReal() - c_fin.getImaginary() * c[i].getImaginary();
+			imaginary = c_fin.getReal() * c[i].getImaginary() + c_fin.getImaginary() * c[i].getReal();
+
+			c_fin = new ComplexNumber(real, imaginary);
+		}
+
+		return c_fin;
+	}
+
+	ComplexNumber conjugate() {
+		return new ComplexNumber(this.real, -this.imaginary);
+	}
+
+	double getAbs() {
+
+		double abs = Math.sqrt(real*real + imaginary*imaginary);
+		return abs;
+	}	       
 
 	double getReal() {
 		return real;

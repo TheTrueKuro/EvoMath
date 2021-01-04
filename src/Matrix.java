@@ -10,15 +10,10 @@ class Matrix {
 
 		if (n.length <= 0) return null;
 
-		double m[][] = new double[n[0]][];
 		final int size = (n.length == 1) ? n[0] : n[1]; // Uses the first variable provided as size if second value doesn't exists
-		if (size <= 0) return null; // This check isn't necessary if the size is also $n[0] but it's efficient enough
+		if (n[0] <= 0 || size <= 0) return null; // This check isn't necessary if the size is also $n[0] but it's efficient enough
 
-		for (int i = 0; i < n[0]; i++) {
-			m[i] = new double[size];
-			for (int j = 0; j < size; j++)
-				m[i][j] = 0;
-		}
+		double m[][] = new double[n[0]][size];
 
 		return new Matrix(m);
 	}
@@ -30,8 +25,7 @@ class Matrix {
 		double m[][] = new double[n][n];
 
 		for (int i = 0; i < n; i++)
-			for (int j = 0; j < n; j++)
-				m[i][j] = (i == j) ? 1 : 0;
+			m[i][i] = 1;
 
 		return new Matrix(m);
 	}
@@ -116,7 +110,7 @@ class Matrix {
 		final int rows = this.numColumns;
 		final int columns = this.numRows;
 
-		double[][] new_matrix = new double[this.matrix[0].length][this.matrix.length];
+		double[][] new_matrix = new double[rows][columns];
 
 		for (int i = 0; i < rows; i++) 
 			for (int j = 0; j < columns; j++)
