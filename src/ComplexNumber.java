@@ -1,5 +1,12 @@
 import java.lang.Math;
 
+/**
+ * @author TheTrueKuro
+ * @version 1.0
+ *
+ * Class created for processing and creating complex numbers
+ */
+
 class ComplexNumber {
 
 	private double real, imaginary;
@@ -64,6 +71,32 @@ class ComplexNumber {
 		return c_fin;
 	}
 
+	public static ComplexNumber multiply(final ComplexNumber c, double d) {
+
+		ComplexNumber c_fin = new ComplexNumber(c.getReal()*d, c.getImaginary()*d);
+
+		return c_fin;
+	}
+
+	public static ComplexNumber multiply(double d, final ComplexNumber c) {
+
+		ComplexNumber c_fin = new ComplexNumber(c.getReal()*d, c.getImaginary()*d);
+
+		return c_fin;
+	}
+
+	public static ComplexNumber pow(final ComplexNumber c, int exponent) {
+
+		ComplexNumber new_c = new ComplexNumber(c);
+
+		for (int i = 2; i <= exponent; i++) {
+
+			new_c = multiply(new_c, c);
+		}
+
+		return new_c;
+	}
+
 	ComplexNumber conjugate() {
 		return new ComplexNumber(this.real, -this.imaginary);
 	}
@@ -73,6 +106,18 @@ class ComplexNumber {
 		double abs = Math.sqrt(real*real + imaginary*imaginary);
 		return abs;
 	}	       
+
+	double getAngle() {
+
+		if (real == 0) return (imaginary >= 0) ? Math.PI/2 : -Math.PI/2;
+
+		final double tan = imaginary/real;
+		double angle = Math.atan(tan);
+
+		if (real < 0) angle += Math.PI;
+
+		return angle;
+	}
 
 	double getReal() {
 		return real;
