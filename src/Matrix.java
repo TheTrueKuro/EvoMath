@@ -48,7 +48,7 @@ class Matrix {
 		return new Matrix(new_matrix);
 	}
 
-	private static double[][] add(double[][] m1, double[][] m2) {
+	private static double[][] add(final double[][] m1, final double[][] m2) {
 
 		// Adding m2 to m1 would change m1 even outside the method so a new double[][] array is needed
 		double[][] m = new double[m1.length][m1[0].length];
@@ -59,6 +59,39 @@ class Matrix {
 		}
 
 		return m;
+	}
+
+	static Matrix multiply(Matrix ... m) {
+
+		if (m.length < 2) return null;
+
+		Matrix new_m = new Matrix(m[0]);
+
+		for (int i = 1; i < m.length; i++) {
+
+			if (new_m.numColumns != m[i].getSize()[0]) return null;
+			
+			new_m = new Matrix(multiply(new_m.getData(), m[i].getData()));	
+		}
+
+		return new_m;
+	}
+
+	private static double[][] multiply(final double[][] d1, final double[][] d2) {
+		
+		//Transpose d2
+		var buff = new Matrix(d2);
+		double[][] d2t = buff.transpose().getData();
+	
+		double[][] d = new double[d1.length][d2t.length];
+
+		for (int i = 0; i < d.length; i++) {
+			for (int j = 0; j < d[i].length; j++) {
+				d[i][j] = Utilities.sum(Utilities.multiply(d1[i], d2t[j]));
+			}
+		}
+
+		return d;
 	}
 
 	Matrix(final Matrix matrix) {
@@ -117,6 +150,18 @@ class Matrix {
 				new_matrix[i][j] = this.matrix[j][i];
 
 		return new Matrix(new_matrix);
+	}
+
+	//Multiplication of matrix with a scalar
+	Matrix multiply(double d) {
+
+		double[][] new_m = new double[numRows][numColumns];
+
+		for (int i = 0; i < numRows; i++)
+			for (int j = 0; j < numColumns; j++)
+				new_m[i][j] = matrix[i][j] * d;
+
+		return new Matrix(new_m);
 	}
 
 	double[][] getData() {
