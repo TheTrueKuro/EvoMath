@@ -29,15 +29,88 @@ class Utilities {
 		return s;
 	}
 
-	public static ComplexNumber sum(final ComplexNumber[] c) {
+	public static ComplexNumber sum(ComplexNumber[] c) {
 
-		ComplexNumber sum = new ComplexNumber();
+		ComplexNumber s = new ComplexNumber();
 
 		for (int i = 0; i < c.length; i++)
-			sum = ComplexNumber.add(sum, c[i]);
+			s = ComplexNumber.add(s, c[i]);
 
-		return sum;
+		return s;
 	}
+
+	public static double product(double[] d) {
+
+		double p = 1;
+
+		for (int i = 0; i < d.length; i++)
+			p *= d[i];
+
+		return p;
+	}
+
+	public static long product(long[] l) {
+
+		long p = 1;
+
+		for (int i = 0; i < l.length; i++)
+			p *= l[i];
+
+		return p;
+	}
+
+	public static ComplexNumber product(ComplexNumber[] c) {
+
+		if (c.length < 1) return null;
+
+		ComplexNumber p = new ComplexNumber(c[0]);
+
+		for (int i = 1; i < c.length; i++)
+			p = ComplexNumber.multiply(p, c[i]);
+
+		return p;
+	}
+
+	public static long fact(int f) {
+
+		if (f < 0) return -1;
+
+		if (f == 0) return 1;
+
+		return f * fact(f - 1);
+	}
+
+	public static long perm(int poss, int total) {
+
+		if (poss > total) {
+			total += poss;
+			poss = total - poss;
+			total = total - poss;
+		}
+
+		long p = 1;
+
+		for (int i = 0; i < poss; i++) {
+			p *= total;
+			total--;
+		}
+
+		return p;
+	}
+
+	public static long combinations(int poss, int total) {
+
+		if (poss > total) {
+			total += poss;
+			poss = total - poss;
+			total = total - poss;
+		}
+
+		long p = perm(poss, total);
+		p /= fact(poss);
+
+		return p;
+	}	
 
 	//Multiplication of tuples
 	public static double[] multiply(final double[] d1, final double[] d2) {

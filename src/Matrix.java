@@ -3,8 +3,8 @@ import java.math.RoundingMode;
 
 class Matrix {
 
-	private double matrix[][];
-	private int numRows, numColumns;
+	final private double matrix[][];
+	final private int numRows, numColumns;
 
 	static Matrix getZeroMatrix(int ... n) {
 
@@ -164,6 +164,91 @@ class Matrix {
 		return new Matrix(new_m);
 	}
 
+	double getDeterminant() {
+
+		if (numColumns != numRows) {
+			System.out.println("Only square matrices can have determinants");
+			return -1;
+		}
+
+		if (numRows == 2)
+			return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+
+		double determinant = 0;
+
+		for (int i = 0; i < numColumns; i++) {
+
+			determinant += matrix[0][i] * getComplement(matrix, 0, i);
+		}
+
+		return determinant;
+	}
+
+	private double getComplement(double[][] d, int y, int x) {
+
+		double determinant = 0;
+		double[][] new_d = new double[d.length-1][d[0].length-1];
+
+		int y_bias = 0;
+
+		outer: for (int i = 0; i < d.length; i++) {
+			       
+			int x_bias = 0;
+
+			for (int j = 0; j < d[i].length; j++) {
+				if (i == y) {
+					y_bias = 1;
+					continue outer;
+				}
+				if (j == x) {
+					x_bias = 1;
+					continue;
+				}
+				new_d[i - y_bias][j - x_bias] = d[i][j];
+			}
+		}
+
+		if (new_d.length > 2) {
+			for (int i = 0; i < new_d.length; i++) {
+				determinant += new_d[0][i] * getComplement(new_d, 0, i);
+			}
+		}
+
+		else if (new_d.length > 1)
+			determinant += new_d[0][0] * new_d[1][1] - new_d[0][1] * new_d[1][0];
+
+		else
+			determinant = new_d[0][0];
+		
+		int sign = ((x+y)%2 == 0) ? 1 : (-1);
+		return sign * determinant;
+	}
+
+	Matrix getInverse() {
+
+		if (numRows != numColumns) return null;
+
+		double determinant = getDeterminant();
+
+		if (determinant == 0) return null;
+
+		Matrix adjacency_matrix = getAdjacencyMatrix();
+		return adjacency_matrix.multiply(1/determinant).transpose();
+	}
+
+	Matrix getAdjacencyMatrix() {
+
+		if (numRows != numColumns) return null;
+
+		double[][] d = new double[numRows][numColumns];
+
+		for (int i = 0; i < numRows; i++)
+			for (int j = 0; j < numColumns; j++)
+				d[i][j] = getComplement(matrix, i, j);
+
+		return new Matrix(d);
+	}
+
 	double[][] getData() {
 		return matrix;
 	}
@@ -193,5 +278,4 @@ class Matrix {
 
 		System.out.println();
 	}
-
 }
