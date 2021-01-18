@@ -82,6 +82,8 @@ class Utilities {
 
 	public static long perm(int poss, int total) {
 
+		//Check if the order is reversed and poss actually has
+		//the value total should have
 		if (poss > total) {
 			total += poss;
 			poss = total - poss;
@@ -100,6 +102,8 @@ class Utilities {
 
 	public static long combinations(int poss, int total) {
 
+		//Check if the order is reversed and poss actually has
+		//the value total should have
 		if (poss > total) {
 			total += poss;
 			poss = total - poss;

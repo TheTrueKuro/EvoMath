@@ -184,6 +184,7 @@ class Matrix {
 		return determinant;
 	}
 
+	//Gets algebric complement of an element of a matrix
 	private double getComplement(double[][] d, int y, int x) {
 
 		double determinant = 0;
@@ -233,7 +234,7 @@ class Matrix {
 		if (determinant == 0) return null;
 
 		Matrix adjacency_matrix = getAdjacencyMatrix();
-		return adjacency_matrix.multiply(1/determinant).transpose();
+		return adjacency_matrix.multiply(1/determinant);
 	}
 
 	Matrix getAdjacencyMatrix() {
@@ -246,7 +247,7 @@ class Matrix {
 			for (int j = 0; j < numColumns; j++)
 				d[i][j] = getComplement(matrix, i, j);
 
-		return new Matrix(d);
+		return new Matrix(d).transpose();
 	}
 
 	double[][] getData() {
