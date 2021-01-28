@@ -7,7 +7,9 @@
  * and others.
  */
 
-class Utilities {
+package Evomath;
+
+public class Utilities {
 
 	public static double sum(double[] d) {
 

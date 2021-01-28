@@ -1,3 +1,5 @@
+package Evomath;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -21,12 +23,12 @@ import java.math.RoundingMode;
  * There is also a void show() method which prints the Matrix object on the screen
  */
 
-class Matrix {
+public class Matrix {
 
 	final private double matrix[][];
 	final private int numRows, numColumns;
 
-	static Matrix getZeroMatrix(int ... n) {
+	public static Matrix getZeroMatrix(int ... n) {
 
 		if (n.length <= 0) return null;
 
@@ -38,7 +40,7 @@ class Matrix {
 		return new Matrix(m);
 	}
 
-	static Matrix getIdentityMatrix(int n) {
+	public static Matrix getIdentityMatrix(int n) {
 
 		if (n <= 0) return null;
 
@@ -50,7 +52,7 @@ class Matrix {
 		return new Matrix(m);
 	}
 
-	static Matrix add(Matrix ... m) {
+	public static Matrix add(Matrix ... m) {
 
 		if (m.length == 0) return null;
 
@@ -81,7 +83,7 @@ class Matrix {
 		return m;
 	}
 
-	static Matrix multiply(Matrix ... m) {
+	public static Matrix multiply(Matrix ... m) {
 
 		if (m.length < 2) return null;
 
@@ -114,7 +116,7 @@ class Matrix {
 		return d;
 	}
 
-	Matrix(final Matrix matrix) {
+	public Matrix(final Matrix matrix) {
 
 		this.matrix = new double[matrix.getSize()[0]][matrix.getSize()[1]];
 		this.numRows = matrix.getSize()[0];
@@ -127,7 +129,7 @@ class Matrix {
 				this.matrix[i][j] = data[i][j];
 	}
 
-	Matrix(double matrix[][]) {
+	public Matrix(double matrix[][]) {
 
 		// Assigning a new 2d array to the instance variable
 		// instead of just typing "this.matrix = matrix"
@@ -147,7 +149,7 @@ class Matrix {
 	// Basically turns a 1D array into a 2D array and then converts that to a Matrix object.
 	// Also, the conversion is done such as the final $matrix will have all of its values
 	// on one line, not one column
-	Matrix(double matrix[]) {
+	public Matrix(double matrix[]) {
 
 		this.matrix = new double[1][matrix.length];
 		this.numRows = 1;
@@ -158,7 +160,7 @@ class Matrix {
 
 	}
 
-	Matrix transpose() {
+	public Matrix transpose() {
 
 		final int rows = this.numColumns;
 		final int columns = this.numRows;
@@ -173,7 +175,7 @@ class Matrix {
 	}
 
 	//Multiplication of matrix with a scalar
-	Matrix multiply(double d) {
+	public Matrix multiply(double d) {
 
 		double[][] new_m = new double[numRows][numColumns];
 
@@ -184,7 +186,7 @@ class Matrix {
 		return new Matrix(new_m);
 	}
 
-	double getDeterminant() {
+	public double getDeterminant() {
 
 		if (numColumns != numRows) {
 			System.out.println("Only square matrices can have determinants");
@@ -245,7 +247,7 @@ class Matrix {
 		return sign * determinant;
 	}
 
-	Matrix getInverse() {
+	public Matrix getInverse() {
 
 		if (numRows != numColumns) return null;
 
@@ -257,7 +259,7 @@ class Matrix {
 		return adjacency_matrix.multiply(1/determinant);
 	}
 
-	Matrix getAdjacencyMatrix() {
+	public Matrix getAdjacencyMatrix() {
 
 		if (numRows != numColumns) return null;
 
@@ -270,7 +272,7 @@ class Matrix {
 		return new Matrix(d).transpose();
 	}
 
-	int getRank() {
+	public int getRank() {
 	
 		int rank = numColumns;
 
@@ -311,7 +313,7 @@ class Matrix {
 		return rank;
 	}
 
-	Matrix swapRows(int row1, int row2) {
+	public Matrix swapRows(int row1, int row2) {
 
 		if (row1 < 0 || row1 >= numRows) return null;
 		if (row2 < 0 || row2 >= numRows) return null;
@@ -338,7 +340,7 @@ class Matrix {
 		return new Matrix(m);
 	}
 
-	Matrix getRow(int row) {
+	public Matrix getRow(int row) {
 
 		if (row < 0 || row >= numRows) return null;
 
@@ -350,7 +352,7 @@ class Matrix {
 		return new Matrix(m);
 	}
 
-	Matrix swapColumns(int col1, int col2) {
+	public Matrix swapColumns(int col1, int col2) {
 
 		if (col1 < 0 || col1 >= numColumns) return null;
 		if (col2 < 0 || col2 >= numColumns) return null;
@@ -376,7 +378,7 @@ class Matrix {
 		return new Matrix(m);
 	}
 
-	Matrix getColumn(int col) {
+	public Matrix getColumn(int col) {
 
 		if (col < 0 || col >= numColumns) return null;
 
@@ -388,7 +390,8 @@ class Matrix {
 		return new Matrix(m);
 	}
 
-	Matrix addToRow(int row, Matrix vector) {
+	//Function to add a vector (Matrix with numRows=1) to an existing row
+	public Matrix addToRow(int row, Matrix vector) {
 
 		if (vector.numColumns != this.numColumns) return null;
 
@@ -400,7 +403,7 @@ class Matrix {
 		return new Matrix(m);
 	}
 
-	boolean equals(Matrix matrix) {
+	public boolean equals(Matrix matrix) {
 
 		if (this.numRows != matrix.numRows || this.numColumns != matrix.numColumns)
 			return false;
@@ -415,11 +418,11 @@ class Matrix {
 		return true;
 	}
 
-	double[][] getData() {
+	public double[][] getData() {
 		return matrix;
 	}
 
-	int[] getSize() {
+	public int[] getSize() {
 
 		int size[] = {numRows, numColumns};
 		return size;
@@ -429,7 +432,7 @@ class Matrix {
 	// The varargs takes only one additional argument which
 	// sets the formating for the decimal places. For example
 	// calling show(3) for 3.141592 only shows 3.142
-	void show(int ... decimal) {
+	public void show(int ... decimal) {
 
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++)

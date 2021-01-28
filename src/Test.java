@@ -1,3 +1,5 @@
+import Evomath.*;
+
 class Test {
 
 	public static void main(String args[]) {
@@ -16,8 +18,8 @@ class Test {
 						 {6, 7, 9}
 						};
 
-		Matrix M1 = new Matrix(m1);
-		Matrix M2 = new Matrix(m2); 
+		var M1 = new Matrix(m1);
+		var M2 = new Matrix(m2); 
 
 		System.out.println(M1.getRank());
 		System.out.println(M2.getRank());

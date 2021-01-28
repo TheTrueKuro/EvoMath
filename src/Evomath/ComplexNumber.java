@@ -1,3 +1,5 @@
+package Evomath;
+
 import java.lang.Math;
 
 /**
@@ -7,22 +9,22 @@ import java.lang.Math;
  * Class created for processing and creating complex numbers
  */
 
-class ComplexNumber {
+public class ComplexNumber {
 
 	private double real, imaginary;
 
-	ComplexNumber() {
+	public ComplexNumber() {
 
 		this.real = this.imaginary = 0;
 	}
 
-	ComplexNumber(double real, double imaginary) {
+	public ComplexNumber(double real, double imaginary) {
 		
 		this.real = real;
 		this.imaginary = imaginary;
 	}
 
-	ComplexNumber(final ComplexNumber c) {
+	public ComplexNumber(final ComplexNumber c) {
 
 		this.real = c.real;
 		this.imaginary = c.imaginary;
@@ -97,17 +99,17 @@ class ComplexNumber {
 		return new_c;
 	}
 
-	ComplexNumber conjugate() {
+	public ComplexNumber conjugate() {
 		return new ComplexNumber(this.real, -this.imaginary);
 	}
 
-	double getAbs() {
+	public double getAbs() {
 
 		double abs = Math.sqrt(real*real + imaginary*imaginary);
 		return abs;
 	}	       
 
-	double getAngle() {
+	public double getAngle() {
 
 		if (real == 0) return (imaginary >= 0) ? Math.PI/2 : -Math.PI/2;
 
@@ -119,15 +121,15 @@ class ComplexNumber {
 		return angle;
 	}
 
-	double getReal() {
+	public double getReal() {
 		return real;
 	}
 
-	double getImaginary() {
+	public double getImaginary() {
 		return imaginary;
 	}
 
-	void show() {
+	public void show() {
 
 		char sign;
 
