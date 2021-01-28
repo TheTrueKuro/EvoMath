@@ -24,8 +24,8 @@ class ComplexNumber {
 
 	ComplexNumber(final ComplexNumber c) {
 
-		this.real = c.getReal();
-		this.imaginary = c.getImaginary();
+		this.real = c.real;
+		this.imaginary = c.imaginary;
 	}
 
 	public static ComplexNumber add(final ComplexNumber ... c) {
@@ -34,8 +34,8 @@ class ComplexNumber {
 		double imaginary = 0;
 
 		for (int i = 0; i < c.length; i++) {
-			real += c[i].getReal();
-			imaginary += c[i].getImaginary();
+			real += c[i].real;
+			imaginary += c[i].imaginary;
 		}
 
 		return new ComplexNumber(real, imaginary);
@@ -43,8 +43,8 @@ class ComplexNumber {
 
 	public static ComplexNumber add(final ComplexNumber c, double ... d) {
 
-		double real = c.getReal();
-		double imaginary = c.getImaginary();
+		double real = c.real;
+		double imaginary = c.imaginary;
 
 		for (int i = 0; i < d.length; i++)
 			real += d[i];
@@ -62,8 +62,8 @@ class ComplexNumber {
 			
 			double real, imaginary;
 
-			real = c_fin.getReal() * c[i].getReal() - c_fin.getImaginary() * c[i].getImaginary();
-			imaginary = c_fin.getReal() * c[i].getImaginary() + c_fin.getImaginary() * c[i].getReal();
+			real = c_fin.real * c[i].real - c_fin.imaginary * c[i].imaginary;
+			imaginary = c_fin.real * c[i].imaginary + c_fin.imaginary * c[i].real;
 
 			c_fin = new ComplexNumber(real, imaginary);
 		}
@@ -73,14 +73,14 @@ class ComplexNumber {
 
 	public static ComplexNumber multiply(final ComplexNumber c, double d) {
 
-		ComplexNumber c_fin = new ComplexNumber(c.getReal()*d, c.getImaginary()*d);
+		ComplexNumber c_fin = new ComplexNumber(c.real*d, c.imaginary*d);
 
 		return c_fin;
 	}
 
 	public static ComplexNumber multiply(double d, final ComplexNumber c) {
 
-		ComplexNumber c_fin = new ComplexNumber(c.getReal()*d, c.getImaginary()*d);
+		ComplexNumber c_fin = new ComplexNumber(c.real*d, c.imaginary*d);
 
 		return c_fin;
 	}
@@ -135,7 +135,7 @@ class ComplexNumber {
 		else sign = 0;
 
 		System.out.print(real); // Writing print(real + sign) actually adds the code value of $sign to the $real variable
-	        System.out.print(sign);
+        System.out.print(sign);
 		System.out.println(imaginary + "i");
 	}	
 }

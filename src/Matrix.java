@@ -1,6 +1,26 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * @author TheTrueKuro
+ * @version 1.0
+ *
+ * Class made for creating and processing matrices.
+ *
+ * There are some static methods such as getIdentityMatrix and getZeroMatrix
+ * which return a matrix. Apart from them the only ways to create a matrix is to
+ * use a constructor and pass in as a parameter a 2D double type array, a 1D 
+ * double type array or another Matrix object to basically return a copy of it.
+ *
+ * The Matrix object created uses an internal final double[][] array meaning the object
+ * itself can't be modified after created.
+ *
+ * The rest of the methods have pretty self-explanatory names which indicate the specific
+ * math operation it performs.
+ *
+ * There is also a void show() method which prints the Matrix object on the screen
+ */
+
 class Matrix {
 
 	final private double matrix[][];
@@ -248,6 +268,151 @@ class Matrix {
 				d[i][j] = getComplement(matrix, i, j);
 
 		return new Matrix(d).transpose();
+	}
+
+	int getRank() {
+	
+		int rank = numColumns;
+
+		Matrix M = new Matrix(this);
+		double[][] m = M.matrix;
+
+		for (int i = 0; i < rank; i++) {
+				
+			if (m[i][i] == 0) {
+
+				boolean swapped = false;
+
+				for (int k = i+1; k < numRows; k++) {
+					if (m[k][i] != 0) {
+						M = M.swapRows(k, i);
+						m = M.matrix;
+						swapped = true;
+						break;
+					}
+				}
+
+				if (!swapped) {
+					M = M.swapColumns(i, rank-1);
+					m = M.matrix;
+					rank--;
+				}
+
+				i--;
+				continue;
+			}
+				
+			for (int j = i; j < numRows-1; j++) {
+				M.addToRow(j+1, M.getRow(i).multiply(-m[j+1][i]/m[i][i]));
+			}
+
+		}
+
+		return rank;
+	}
+
+	Matrix swapRows(int row1, int row2) {
+
+		if (row1 < 0 || row1 >= numRows) return null;
+		if (row2 < 0 || row2 >= numRows) return null;
+
+		double m[][] = new double[numRows][numColumns];
+
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+
+				if (i == row1) {
+					m[i][j] = matrix[row2][j];
+				}
+
+				else if (i == row2) {
+					m[i][j] = matrix[row1][j];
+				}
+
+				else {
+					m[i][j] = matrix[i][j];
+				}
+			}
+		}
+
+		return new Matrix(m);
+	}
+
+	Matrix getRow(int row) {
+
+		if (row < 0 || row >= numRows) return null;
+
+		double m[] = new double[numColumns];
+
+		for (int i = 0; i < numColumns; i++)
+			m[i] = matrix[row][i];
+
+		return new Matrix(m);
+	}
+
+	Matrix swapColumns(int col1, int col2) {
+
+		if (col1 < 0 || col1 >= numColumns) return null;
+		if (col2 < 0 || col2 >= numColumns) return null;
+
+		double m[][] = new double[numRows][numColumns];
+
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				if (j == col1) {
+					m[i][j] = matrix[i][col2];
+				}
+
+				else if (j == col2) {
+					m[i][j] = matrix[i][col1];
+				}
+
+				else {
+					m[i][j] = matrix[i][j];
+				}
+			}
+		}
+
+		return new Matrix(m);
+	}
+
+	Matrix getColumn(int col) {
+
+		if (col < 0 || col >= numColumns) return null;
+
+		double m[] = new double[numRows];
+
+		for (int i = 0; i < numRows; i++)
+			m[i] = matrix[i][col];
+
+		return new Matrix(m);
+	}
+
+	Matrix addToRow(int row, Matrix vector) {
+
+		if (vector.numColumns != this.numColumns) return null;
+
+		double m[][] = matrix.clone();
+
+		for (int i = 0; i < numColumns; i++) 
+			m[row][i] += vector.matrix[0][i];
+
+		return new Matrix(m);
+	}
+
+	boolean equals(Matrix matrix) {
+
+		if (this.numRows != matrix.numRows || this.numColumns != matrix.numColumns)
+			return false;
+
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				if (this.matrix[i][j] != matrix.matrix[i][j])
+					return false;
+			}
+		}
+
+		return true;
 	}
 
 	double[][] getData() {

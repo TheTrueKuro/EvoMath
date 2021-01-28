@@ -1,6 +1,6 @@
 /**
  * @author TheTrueKuro
- * @version 1.0
+ * @version 1.1
  *
  * Java class for common operations such as
  * the sum or product of an array, multiplication of tuples
@@ -69,6 +69,30 @@ class Utilities {
 			p = ComplexNumber.multiply(p, c[i]);
 
 		return p;
+	}
+
+	public static double max(double[] d) {
+
+		double max = d[0];
+
+		for (int i = 1; i < d.length; i++) {
+
+			max = max < d[i] ? d[i] : max;
+		}
+
+		return max;
+	}
+
+	public static long max(long[] l) {
+
+		long max = l[0];
+
+		for (int i = 1; i < l.length; i++) {
+
+			max = max < l[i] ? l[i] : max;
+		}
+
+		return max;
 	}
 
 	public static long fact(int f) {
