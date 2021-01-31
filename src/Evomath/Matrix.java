@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 
 /**
  * @author TheTrueKuro
- * @version 1.0
+ * @version 1.1
  *
  * Class made for creating and processing matrices.
  *
@@ -56,13 +56,13 @@ public class Matrix {
 
 		if (m.length == 0) return null;
 
-		final int rows = m[0].getSize()[0];
-		final int columns = m[0].getSize()[1];
+		final int rows = m[0].numRows;
+		final int columns = m[0].numColumns;
 
 		double[][] new_matrix = new double[rows][columns];
 
 		for (int i = 0; i < m.length; i++) {
-			if (rows != m[i].getSize()[0] || columns != m[i].getSize()[1]) return null;
+			if (rows != m[i].numRows || columns != m[i].numColumns) return null;
 
 			new_matrix = add(new_matrix, m[i].getData());
 		}
@@ -91,7 +91,7 @@ public class Matrix {
 
 		for (int i = 1; i < m.length; i++) {
 
-			if (new_m.numColumns != m[i].getSize()[0]) return null;
+			if (new_m.numColumns != m[i].numRows) return null;
 			
 			new_m = new Matrix(multiply(new_m.getData(), m[i].getData()));	
 		}
@@ -118,9 +118,9 @@ public class Matrix {
 
 	public Matrix(final Matrix matrix) {
 
-		this.matrix = new double[matrix.getSize()[0]][matrix.getSize()[1]];
-		this.numRows = matrix.getSize()[0];
-		this.numColumns = matrix.getSize()[1];
+		this.matrix = new double[matrix.numRows][matrix.numColumns];
+		this.numRows = matrix.numRows;
+		this.numColumns = matrix.numColumns;
 		
 		final double[][] data = matrix.getData();
 
