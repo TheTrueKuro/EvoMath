@@ -277,10 +277,11 @@ public class Matrix {
 		int rank = numColumns;
 
 		Matrix M = new Matrix(this);
-		double[][] m = M.matrix;
 
 		for (int i = 0; i < rank; i++) {
 				
+			double[][] m = M.matrix;
+
 			if (m[i][i] == 0) {
 
 				boolean swapped = false;
@@ -288,7 +289,6 @@ public class Matrix {
 				for (int k = i+1; k < numRows; k++) {
 					if (m[k][i] != 0) {
 						M = M.swapRows(k, i);
-						m = M.matrix;
 						swapped = true;
 						break;
 					}
@@ -296,7 +296,6 @@ public class Matrix {
 
 				if (!swapped) {
 					M = M.swapColumns(i, rank-1);
-					m = M.matrix;
 					rank--;
 				}
 
@@ -304,8 +303,9 @@ public class Matrix {
 				continue;
 			}
 				
-			for (int j = i; j < numRows-1; j++) {
-				M.addToRow(j+1, M.getRow(i).multiply(-m[j+1][i]/m[i][i]));
+			for (int j = 0; j < numRows; j++) {
+				if (j != i) 
+					M = M.addToRow(j, M.getRow(i).multiply(-m[j][i]/m[i][i]));
 			}
 
 		}
@@ -397,8 +397,11 @@ public class Matrix {
 
 		double m[][] = matrix.clone();
 
-		for (int i = 0; i < numColumns; i++) 
+		for (int i = 0; i < numColumns; i++) {
 			m[row][i] += vector.matrix[0][i];
+			if (m[row][i] < 1e-15 && m[row][i] > -1e-15)
+				m[row][i] = 0;
+		}
 
 		return new Matrix(m);
 	}
