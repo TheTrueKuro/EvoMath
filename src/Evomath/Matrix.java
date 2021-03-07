@@ -422,7 +422,10 @@ public class Matrix {
 	}
 
 	public double[][] getData() {
-		return matrix;
+		double[][] data = new double[numRows][numColumns];
+		for (int i = 0; i < numRows; i++)
+			data[i] = matrix[i].clone();
+		return data;
 	}
 
 	public int[] getSize() {
