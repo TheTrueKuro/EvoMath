@@ -30,10 +30,10 @@ public class Matrix {
 
 	public static Matrix getZeroMatrix(int ... n) {
 
-		if (n.length <= 0) return null;
+		if (n.length <= 0) throw new EvomathException("No parameters given. At least 1 required.");
 
 		final int size = (n.length == 1) ? n[0] : n[1]; // Uses the first variable provided as size if second value doesn't exists
-		if (n[0] <= 0 || size <= 0) return null; // This check isn't necessary if the size is also $n[0] but it's efficient enough
+		if (n[0] <= 0 || size <= 0) throw new EvomathException("Error. Matrix size is less than 1"); // This check isn't necessary if the size is also $n[0] but it's efficient enough
 
 		double m[][] = new double[n[0]][size];
 
@@ -42,7 +42,7 @@ public class Matrix {
 
 	public static Matrix getIdentityMatrix(int n) {
 
-		if (n <= 0) return null;
+		if (n <= 0) throw new EvomathException("Error. Matrix size is less than 1");
 
 		double m[][] = new double[n][n];
 
@@ -54,7 +54,7 @@ public class Matrix {
 
 	public static Matrix add(Matrix ... m) {
 
-		if (m.length == 0) return null;
+		if (m.length == 0) throw new EvomathException("Error. Matrix size is less than 1");
 
 		final int rows = m[0].numRows;
 		final int columns = m[0].numColumns;
@@ -62,7 +62,7 @@ public class Matrix {
 		double[][] new_matrix = new double[rows][columns];
 
 		for (int i = 0; i < m.length; i++) {
-			if (rows != m[i].numRows || columns != m[i].numColumns) return null;
+			if (rows != m[i].numRows || columns != m[i].numColumns) throw new EvomathException("Number of rows of first matrix isn't equal to number of columns of next matrix. Matrix multiplication error");
 
 			new_matrix = add(new_matrix, m[i].getData());
 		}
@@ -85,13 +85,13 @@ public class Matrix {
 
 	public static Matrix multiply(Matrix ... m) {
 
-		if (m.length < 2) return null;
+		if (m.length < 2) throw new EvomathException("There has to be more than 1 matrix to multiply them");
 
 		Matrix new_m = new Matrix(m[0]);
 
 		for (int i = 1; i < m.length; i++) {
 
-			if (new_m.numColumns != m[i].numRows) return null;
+			if (new_m.numColumns != m[i].numRows) throw new EvomathException("Number of rows of first matrix isn't equal to number of columns of next matrix. Matrix multiplication error");
 			
 			new_m = new Matrix(multiply(new_m.getData(), m[i].getData()));	
 		}
@@ -249,7 +249,7 @@ public class Matrix {
 
 	public Matrix getInverse() {
 
-		if (numRows != numColumns) return null;
+		if (numRows != numColumns) throw new EvomathException("Matrix has to be square to get the inverse");
 
 		double determinant = getDeterminant();
 
@@ -261,7 +261,7 @@ public class Matrix {
 
 	public Matrix getAdjacencyMatrix() {
 
-		if (numRows != numColumns) return null;
+		if (numRows != numColumns) throw new EvomathException("Matrix has to be square to get adjacency matrix");
 
 		double[][] d = new double[numRows][numColumns];
 
@@ -315,8 +315,8 @@ public class Matrix {
 
 	public Matrix swapRows(int row1, int row2) {
 
-		if (row1 < 0 || row1 >= numRows) return null;
-		if (row2 < 0 || row2 >= numRows) return null;
+		if (row1 < 0 || row1 >= numRows) throw new EvomathException("Row index is invalid. It has to be from [0; numRows)");
+		if (row2 < 0 || row2 >= numRows) throw new EvomathException("Row index is invalid. It has to be from [0; numRows)");
 
 		double m[][] = new double[numRows][numColumns];
 
@@ -342,7 +342,7 @@ public class Matrix {
 
 	public Matrix getRow(int row) {
 
-		if (row < 0 || row >= numRows) return null;
+		if (row < 0 || row >= numRows) throw new EvomathException("Row index is invalid. It has to be from [0; numRows)");
 
 		double m[] = new double[numColumns];
 
@@ -354,8 +354,8 @@ public class Matrix {
 
 	public Matrix swapColumns(int col1, int col2) {
 
-		if (col1 < 0 || col1 >= numColumns) return null;
-		if (col2 < 0 || col2 >= numColumns) return null;
+		if (col1 < 0 || col1 >= numColumns) throw new EvomathException("Column index is invalid. It has to be from [0; numColumns)");
+		if (col2 < 0 || col2 >= numColumns) throw new EvomathException("Column index is invalid. It has to be from [0; numColumns)");
 
 		double m[][] = new double[numRows][numColumns];
 
@@ -380,7 +380,7 @@ public class Matrix {
 
 	public Matrix getColumn(int col) {
 
-		if (col < 0 || col >= numColumns) return null;
+		if (col < 0 || col >= numColumns) throw new EvomathException("Column index is invalid. It has to be from [0; numColumns)");
 
 		double m[] = new double[numRows];
 
@@ -393,7 +393,7 @@ public class Matrix {
 	//Function to add a vector (Matrix with numRows=1) to an existing row
 	public Matrix addToRow(int row, Matrix vector) {
 
-		if (vector.numColumns != this.numColumns) return null;
+		if (vector.numColumns != this.numColumns) throw new EvomathException("The number of columns of the vector and matrix doesn't match");
 
 		double m[][] = matrix.clone();
 
