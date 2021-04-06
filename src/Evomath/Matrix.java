@@ -62,7 +62,7 @@ public class Matrix {
 		double[][] new_matrix = new double[rows][columns];
 
 		for (int i = 0; i < m.length; i++) {
-			if (rows != m[i].numRows || columns != m[i].numColumns) throw new EvomathException("Number of rows of first matrix isn't equal to number of columns of next matrix. Matrix multiplication error");
+			if (rows != m[i].numRows || columns != m[i].numColumns) throw new EvomathException("Number of columns of first matrix isn't equal to number of rows of next matrix. Matrix multiplication error");
 
 			new_matrix = add(new_matrix, m[i].getData());
 		}
@@ -91,7 +91,7 @@ public class Matrix {
 
 		for (int i = 1; i < m.length; i++) {
 
-			if (new_m.numColumns != m[i].numRows) throw new EvomathException("Number of rows of first matrix isn't equal to number of columns of next matrix. Matrix multiplication error");
+			if (new_m.numColumns != m[i].numRows) throw new EvomathException("Number of columns of first matrix isn't equal to number of rows of next matrix. Matrix multiplication error");
 			
 			new_m = new Matrix(multiply(new_m.getData(), m[i].getData()));	
 		}
