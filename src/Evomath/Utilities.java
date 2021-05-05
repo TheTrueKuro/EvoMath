@@ -97,6 +97,38 @@ public class Utilities {
 		return max;
 	}
 
+	public static int indexOfMax(double[] d) {
+
+		double max = d[0];
+		int index = 0;
+
+		for (int i = 1; i < d.length; i++) {
+
+			if (max < d[i]) {
+				max = d[i];
+				index = i;
+			} 
+		}
+
+		return index;
+	}
+
+	public static int indexOfMax(long[] l) {
+
+		long max = l[0];
+		int index = 0;
+
+		for (int i = 1; i < l.length; i++) {
+
+			if (max < l[i]) {
+				max = l[i];
+				index = i;
+			}
+		}
+
+		return index;
+	}
+
 	public static long fact(int f) {
 
 		if (f < 0) return -1;
