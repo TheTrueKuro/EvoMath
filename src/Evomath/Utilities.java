@@ -31,6 +31,12 @@ public class Utilities {
 		return s;
 	}
 
+	public static double average(double[] d) {
+
+		double s = sum(d);
+		return s / d.length;
+	}
+
 	public static ComplexNumber sum(ComplexNumber[] c) {
 
 		ComplexNumber s = new ComplexNumber();

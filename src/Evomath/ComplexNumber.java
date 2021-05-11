@@ -129,15 +129,14 @@ public class ComplexNumber {
 		return imaginary;
 	}
 
-	public void show() {
+	public String toString() {
 
-		char sign;
+		String sign;
 
-		if (imaginary >= 0) sign = '+';
-		else sign = 0;
+		if (imaginary >= 0) sign = "+";
+		else sign = "";
 
-		System.out.print(real); // Writing print(real + sign) actually adds the code value of $sign to the $real variable
-        System.out.print(sign);
-		System.out.println(imaginary + "i");
+		String text = real + sign + imaginary + "i";
+		return text;
 	}	
 }

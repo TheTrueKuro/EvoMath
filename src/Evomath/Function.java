@@ -26,4 +26,8 @@ public class Function {
 		Double val = (Double) engine.eval(function);
 		return val;	
 	}
+
+	public String toString() {
+		return this.function;
+	}
 }
