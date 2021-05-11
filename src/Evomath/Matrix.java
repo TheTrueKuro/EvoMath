@@ -2,6 +2,8 @@ package Evomath;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Random;
+import java.util.Date;
 
 /**
  * @author TheTrueKuro
@@ -48,6 +50,29 @@ public class Matrix {
 
 		for (int i = 0; i < n; i++)
 			m[i][i] = 1;
+
+		return new Matrix(m);
+	}
+
+	public static Matrix getRandomMatrix(int rows, int columns) {
+
+		if (rows <= 0 || columns <= 0)
+			throw new EvomathException("Error. Number of rows and columns can't be less than 0.");
+
+		double m[][] = new double[rows][columns];
+
+		Random generator = new Random();
+		Date date = new Date();
+		long time = date.getTime();
+		generator.setSeed(time);
+
+		date = null;
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				m[i][j] = 0.1 * generator.nextDouble() * (generator.nextBoolean() ? 1 : -1);
+			}
+		}
 
 		return new Matrix(m);
 	}
