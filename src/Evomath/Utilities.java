@@ -135,6 +135,24 @@ public class Utilities {
 		return index;
 	}
 
+	public static int indexOf(double x, double[] d) {
+
+		for (int i = 0; i < d.length; i++)
+			if (x == d[i]) 
+				return i;
+
+		return -1;
+	}
+
+	public static int indexOf(long x, long[] l) {
+
+		for (int i = 0; i < l.length; i++)
+			if (x == l[i]) 
+				return i;
+
+		return -1;
+	}
+
 	public static long fact(int f) {
 
 		if (f < 0) return -1;
