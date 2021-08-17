@@ -153,6 +153,15 @@ public class Utilities {
 		return -1;
 	}
 
+	public static int indexOf(Object x, Object[] arr) {
+
+		for (int i = 0; i < arr.length; i++)
+			if (x.equals(arr[i]))
+				return i;
+
+		return -1;
+	}
+
 	public static long fact(int f) {
 
 		if (f < 0) return -1;
