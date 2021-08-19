@@ -377,6 +377,23 @@ public class Matrix {
 		return new Matrix(m);
 	}
 
+	public Matrix removeRow(int row) {
+
+		if (row < 0 || row >= numRows) throw new EvomathException("Row index is invalid. It has to be from [0; numRows)");
+
+		double[][] m = new double[numRows-1][numColumns];
+
+		for (int i = 0; i < numRows; i++) {
+			if (i == row)
+				continue;
+			for (int j = 0; j < numColumns; j++) {
+				m[i - (i>row) ? 1 : 0][j] = matrix[i][j];
+			}
+		}
+
+		return new Matrix(m);
+	}
+
 	public Matrix swapColumns(int col1, int col2) {
 
 		if (col1 < 0 || col1 >= numColumns) throw new EvomathException("Column index is invalid. It has to be from [0; numColumns)");
@@ -411,6 +428,23 @@ public class Matrix {
 
 		for (int i = 0; i < numRows; i++)
 			m[i] = matrix[i][col];
+
+		return new Matrix(m);
+	}
+
+	public Matrix removeColumn(int col) {
+
+		if (col < 0 || col >= numColumns) throw new EvomathException("Column index is invalid. It has to be from [0; numColumns)");
+
+		double[][] m = new double[numRows][numColumns-1];
+
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				if (j == col)
+					continue;
+				m[i][j - (j>col) ? 1 : 0] = matrix[i][j];
+			}
+		}
 
 		return new Matrix(m);
 	}
@@ -457,6 +491,20 @@ public class Matrix {
 
 		int size[] = {numRows, numColumns};
 		return size;
+	}
+
+	public String toString() {
+
+		String text = "";
+
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++)
+				text += String.valueOf(matrix[i][j]) + " ";
+			text += "\n";
+		}
+
+		text += "\n";
+		return text;
 	}
 
 	// Prints the matrix to the screen.
