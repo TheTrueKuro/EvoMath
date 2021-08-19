@@ -437,7 +437,7 @@ public class Matrix {
 		for (int i = 0; i < numRows; i++)
 			m[i] = matrix[i][col];
 
-		return new Matrix(m);
+		return (new Matrix(m)).transpose();
 	}
 
 	public Matrix removeColumn(int col) {
