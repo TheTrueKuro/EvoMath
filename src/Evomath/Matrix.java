@@ -185,6 +185,14 @@ public class Matrix {
 
 	}
 
+	public double get(int i, int j) {
+
+		if ((i < 0 || i >= numRows) || (j < 0 || j >= numColumns))
+			throw new EvomathException("Index out of bounds");
+
+		return matrix[i][j];
+	}
+
 	public Matrix transpose() {
 
 		final int rows = this.numColumns;
@@ -387,7 +395,7 @@ public class Matrix {
 			if (i == row)
 				continue;
 			for (int j = 0; j < numColumns; j++) {
-				m[i - (i>row) ? 1 : 0][j] = matrix[i][j];
+				m[i - (i > row ? 1 : 0)][j] = matrix[i][j];
 			}
 		}
 
@@ -442,7 +450,7 @@ public class Matrix {
 			for (int j = 0; j < numColumns; j++) {
 				if (j == col)
 					continue;
-				m[i][j - (j>col) ? 1 : 0] = matrix[i][j];
+				m[i][j - (j > col ? 1 : 0)] = matrix[i][j];
 			}
 		}
 

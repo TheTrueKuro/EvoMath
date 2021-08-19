@@ -9,6 +9,8 @@
 
 package Evomath;
 
+import Evomath.Matrix;
+
 public class Utilities {
 
 	public static double sum(double[] d) {
@@ -27,6 +29,17 @@ public class Utilities {
 
 		for (int i = 0; i < l.length; i++)
 			s += l[i];
+
+		return s;
+	}
+
+	public static double sum(Matrix m) {
+
+		double s = 0;
+
+		for (int i = 0; i < m.getSize()[0]; i++)
+			for (int j = 0; j < m.getSize()[1]; j++)
+				s += m.get(i, j);
 
 		return s;
 	}
