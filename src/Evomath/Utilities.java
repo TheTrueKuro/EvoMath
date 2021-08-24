@@ -245,4 +245,22 @@ public class Utilities {
 		return c;
 	}
 
+	public static double round(double d, int precision) {
+
+		if (precision < 1)
+			return d;
+
+		for (int i = 0; i < precision; i++)
+			d *= 10;
+
+		if (d - ((int) d) > 0.5)
+			d++;
+
+		d = (int) d;
+
+		for (int i = 0; i < precision; i++)
+			d /= 10;
+
+		return d;
+	}
 }
