@@ -108,24 +108,24 @@ public class Matrix {
 		return m;
 	}
 
-	public static Matrix multiply(Matrix ... m) {
+	public static Matrix multiply(final Matrix ... m) {
 
 		if (m.length < 2) throw new EvomathException("There has to be more than 1 matrix to multiply them");
 
-		Matrix new_m = new Matrix(m[0]);
+		var new_m = m[0].matrix;
 
 		for (int i = 1; i < m.length; i++) {
 
-			if (new_m.numColumns != m[i].numRows) throw new EvomathException("Number of columns of first matrix isn't equal to number of rows of next matrix. Matrix multiplication error");
+			if (new_m[0].length != m[i].numRows) throw new EvomathException("Number of columns of first matrix isn't equal to number of rows of next matrix. Matrix multiplication error");
 			
-			new_m = new Matrix(multiply(new_m.matrix, m[i].matrix));	
+			new_m = multiply(new_m, m[i].matrix);	
 		}
 
-		return new_m;
+		return new Matrix(new_m);
 	}
 	
 	private static double[][] multiply(final double[][] d1, final double[][] d2) {
-		
+		//TODO Fix heap memory issues	
 		double[][] d = new double[d1.length][d2[0].length];
 		Thread[] threads = new Thread[4];
 
@@ -143,6 +143,18 @@ public class Matrix {
 
 			var buff = new Matrix.ThreadedMultiplication(i%4, d, d1, d2, i);
 			threads[i % 4] = buff.t;
+			buff.t.start();
+		}
+
+		for (var thread : threads) {
+			if (thread != null && thread.isAlive()) {
+				try {
+					thread.join();
+				}
+				catch(InterruptedException e) {
+					System.out.println("Multiplication error " + e);
+				}
+			}
 		}
 
 		return d;
@@ -171,7 +183,7 @@ public class Matrix {
 			for (int i = 0; i < m2[0].length; i++) {
 				result[row][i] = 0;
 				for (int j = 0; j < m2.length; j++) {
-					result[row][i] += m1[row][i] * m2[i][j];
+					result[row][i] += m1[row][j] * m2[j][i];
 				}
 			}
 		}
