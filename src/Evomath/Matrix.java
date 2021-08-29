@@ -118,27 +118,63 @@ public class Matrix {
 
 			if (new_m.numColumns != m[i].numRows) throw new EvomathException("Number of columns of first matrix isn't equal to number of rows of next matrix. Matrix multiplication error");
 			
-			new_m = new Matrix(multiply(new_m.getData(), m[i].getData()));	
+			new_m = new Matrix(multiply(new_m.matrix, m[i].matrix));	
 		}
 
 		return new_m;
 	}
-
+	
 	private static double[][] multiply(final double[][] d1, final double[][] d2) {
 		
-		//Transpose d2
-		var buff = new Matrix(d2);
-		double[][] d2t = buff.transpose().getData();
-	
-		double[][] d = new double[d1.length][d2t.length];
+		double[][] d = new double[d1.length][d2[0].length];
+		Thread[] threads = new Thread[4];
 
 		for (int i = 0; i < d.length; i++) {
-			for (int j = 0; j < d[i].length; j++) {
-				d[i][j] = Utilities.sum(Utilities.multiply(d1[i], d2t[j]));
+			if (i % 4 == 0 && i > 0) {
+				for (var thread : threads) {
+					try {
+						thread.join();
+					}
+					catch(InterruptedException e) {
+						System.out.println("Multiplication error " + e);
+					}
+				}
 			}
+
+			var buff = new Matrix.ThreadedMultiplication(i%4, d, d1, d2, i);
+			threads[i % 4] = buff.t;
 		}
 
 		return d;
+	}
+
+	private static class ThreadedMultiplication implements Runnable {
+
+		Thread t;
+		volatile double result[][];
+		final double[][] m1;
+		final double[][] m2;
+		int row;
+
+		ThreadedMultiplication(int index, double[][] result, final double[][] m1, final double[][] m2, int row) {
+
+			final String name = "Thread: " + index;
+			t = new Thread(this, name);
+			this.result = result;
+			this.m1 = m1;
+			this.m2 = m2;
+			this.row = row;
+		}
+
+		public void run() {
+
+			for (int i = 0; i < m2[0].length; i++) {
+				result[row][i] = 0;
+				for (int j = 0; j < m2.length; j++) {
+					result[row][i] += m1[row][i] * m2[i][j];
+				}
+			}
+		}
 	}
 
 	public Matrix(final Matrix matrix) {
@@ -147,7 +183,7 @@ public class Matrix {
 		this.numRows = matrix.numRows;
 		this.numColumns = matrix.numColumns;
 		
-		final double[][] data = matrix.getData();
+		final double[][] data = matrix.matrix;
 
 		for (int i = 0; i < this.numRows; i++) 
 			for (int j = 0; j < this.numColumns; j++) 
