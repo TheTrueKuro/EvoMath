@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * @author TheTrueKuro
- * @version 1.1
+ * @version 1.2
  *
  * Class made for creating and processing matrices.
  *
